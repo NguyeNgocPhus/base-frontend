@@ -1,0 +1,28 @@
+.button-h56 {
+  height: 56px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 28px;
+}
+.orange {
+  color: #ffff;
+  background: var(--orange);
+}
+.red {
+  color: #ffff;
+  background: var(--red);
+}
+.blue-dark {
+  color: #ffff;
+  background: var(--blue-dark);
+}
+.ant-btn.button-h44 {
+  height: 44px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 22px;
+}
