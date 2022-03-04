@@ -49,3 +49,21 @@ h6 {
   background-color: #ffbd2f;
   color: #000000;
 }
+.ant-table-thead > tr > th {
+  background: #fafafb !important;
+  color: #434243 !important;
+  line-height: 24px !important;
+  font-weight: 600 !important;
+  padding: 10px 10px !important;
+}
+
+.ant-table-tbody > tr > td {
+  color: #434243 !important;
+  padding: 10px 10px !important;
+}
+.ant-form {
+  width: 400px;
+}
+.ant-dropdown-trigger {
+  width: 400px;
+}
