@@ -1,10 +1,10 @@
 import "antd/dist/antd.css";
 import "./App.css";
-
+import { Route, Routes, Outlet, BrowserRouter } from "react-router-dom";
 import { ButtonH44kBlueDark, ButtonH56Orange } from "./ui-source/button";
 import "./App.css";
 import { InputNumberUI, InputText, TextAreaUI } from "./ui-source/input";
-
+import { RecoilRoot } from "recoil";
 import {
   BoldText,
   HeadText,
@@ -19,6 +19,7 @@ import FormItem from "antd/lib/form/FormItem";
 import { Form, Input, Button, Checkbox, Dropdown } from "antd";
 import { MenuItem, MenuUI } from "./ui-source/menu";
 import { PaginationUI } from "./ui-source/pagination";
+import UserLogin from "./ui-pages/login";
 const tableData = [
   {
     title: "An toàn thực phẩm",
@@ -54,7 +55,7 @@ const menu = (
     </MenuItem>
   </MenuUI>
 );
-function App() {
+function Test() {
   return (
     <div className="App">
       <ButtonH56Orange htmlType="submit" className="btn-dismiss">
@@ -152,6 +153,25 @@ function App() {
         }}
       ></PaginationUI>
     </div>
+  );
+}
+
+function RouteRoot() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="login" element={<UserLogin></UserLogin>}></Route>
+        <Route path="test" element={<Test></Test>}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <RecoilRoot>
+      <RouteRoot></RouteRoot>
+    </RecoilRoot>
   );
 }
 
