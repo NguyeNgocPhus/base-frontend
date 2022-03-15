@@ -21,3 +21,4 @@ export const MySelect = ({
     </Select>
   );
 };
+export const MyOption = Option;

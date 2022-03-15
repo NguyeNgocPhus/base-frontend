@@ -1,5 +1,5 @@
 import { Input, Layout, Space } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ImageUI } from "../../ui-source/image";
 import { HeadText, NormalText, TitleText } from "../../ui-source/text";
 import { FormItem, FormUI } from "../../ui-source/form";
@@ -10,7 +10,47 @@ import { Rows } from "../../ui-source/row";
 import { InputText } from "../../ui-source/input";
 import { UserOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
 import { ButtonH44Orange } from "../../ui-source/button";
+import { useUserLogin } from "../../store/auth/use-user-login";
+import { REQUEST_STATE } from "../../app-config/constants";
+import { useHistory } from "react-router-dom";
+import { NotificationError } from "../../ui-source/notification";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../store/auth/share-state";
+import { getUserInfo } from "../../app-helper";
 function UserLogin() {
+  const [userLoginData, requestLogin, setUserLoginData] = useUserLogin();
+  const userInfo = getUserInfo();
+
+  const [userName, setUserName] = useState("");
+  const [password, setPasswrod] = useState("");
+  const history = useHistory();
+  if (userInfo) {
+    history.push("/home");
+  }
+  const onUserNameChange = (e) => {
+    setUserName(e.target.value);
+  };
+  const onPasswordChange = (e) => {
+    setPasswrod(e.target.value);
+  };
+
+  const doLogin = () => {
+    requestLogin({ userName, password });
+  };
+
+  const onFinish = () => {
+    doLogin();
+  };
+  useEffect(() => {
+    if (userLoginData.state === REQUEST_STATE.SUCCESS) {
+      history.push("/home");
+    } else if (userLoginData.state === REQUEST_STATE.ERROR) {
+      const errorMsg = userLoginData?.message ? userLoginData?.message : "";
+
+      NotificationError(userLoginData.state, errorMsg);
+    }
+  }, [userLoginData, history]);
+
   return (
     <Layout className="login-layout">
       <div className="left">
@@ -41,18 +81,23 @@ function UserLogin() {
             initialValues={{
               remember: true,
             }}
+            onFinish={onFinish}
             className="login-form"
           >
             <TitleText className="email-text">Email</TitleText>
             <FormItem>
               <InputText
                 className="email-input"
+                onChange={onUserNameChange}
                 suffix={<UserOutlined style={{ color: "#8B8989" }} />}
               ></InputText>
             </FormItem>
             <TitleText className="password-text">Password</TitleText>
             <FormItem>
-              <Input.Password className="password-input"></Input.Password>
+              <Input.Password
+                onChange={onPasswordChange}
+                className="password-input"
+              ></Input.Password>
             </FormItem>
             <FormItem className="button-form-field">
               <ButtonH44Orange htmlType="submit" className="btn-dismiss">

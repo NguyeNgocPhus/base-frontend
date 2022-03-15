@@ -1,0 +1,12 @@
+.scp-left-menu {
+  background-color: #ececec;
+}
+.logo {
+  margin: 20px auto;
+  width: 50px;
+}
+@media screen and (max-width: 960px) {
+  .scp-left-menu {
+    display: none;
+  }
+}
