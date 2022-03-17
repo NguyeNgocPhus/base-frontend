@@ -20,3 +20,23 @@ export const stateKhuVuc = atom({
     ...defaultState,
   },
 });
+
+export const stateTinh = atom({
+  key: "STATE-TINH",
+  default: {
+    ...defaultState,
+  },
+});
+
+export const stateThuongHieu = atom({
+  key: "STATE-THUONG-HIEU",
+  default: {
+    ...defaultState,
+  },
+});
+export const stateNhaHang = atom({
+  key: "STATE-NHA-HANG",
+  default: {
+    ...defaultState,
+  },
+});
