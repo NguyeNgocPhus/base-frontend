@@ -6,3 +6,6 @@ export const REQUEST_STATE = {
   INVALID: "INVALID",
   PROCESSING: "Đang xử lý",
 };
+export const ROLES = {
+  SYSTEM_ADMIN: "system admin",
+};

@@ -14,6 +14,7 @@ const ChonNhaHang = ({
   const [dataNhaHang, requestDataNhaHang] = useNhaHang();
   const [listFilteredNhaHang, setListFilteredNhaHang] = useState([]);
   const [value, setValue] = useState(["all"]);
+
   useEffect(() => {
     requestDataNhaHang({
       Page: 1,
@@ -26,9 +27,8 @@ const ChonNhaHang = ({
     if (dataNhaHang && dataNhaHang?.data?.result?.length > 0)
       setListFilteredNhaHang(dataNhaHang.data.result);
   }, [dataNhaHang]);
-
   useEffect(() => {
-    if (dataNhaHang.data.result && dataNhaHang.data.result.length > 0) {
+    if (dataNhaHang?.data?.result && dataNhaHang?.data?.result.length > 0) {
       let isAllTinh =
         selectedTinh &&
         selectedTinh.length > 0 &&
@@ -60,6 +60,7 @@ const ChonNhaHang = ({
       }
     }
   }, [selectedTinh, selectedThuongHieu]);
+
   const filterTinh = (arr1, arr2) => {
     return arr1.filter((data) => {
       return arr2.findIndex((valArr2) => data.cityCode === valArr2.value) > -1
@@ -74,9 +75,27 @@ const ChonNhaHang = ({
         : false;
     });
   };
-  const onChange = (value) => {
-    setValue(value);
+  const onChange = (value, item) => {
+    if (item.length > 0) {
+      if (item[item.length - 1].value === "all") {
+        setValue(["all"]);
+        setSelectedNhaHang([{ value: "all" }]);
+      } else {
+        for (let i = 0; i < item.length; i++) {
+          if (item[i].value === "all") {
+            item.splice(i, i + 1);
+            value.splice(i, i + 1);
+          }
+        }
+        setSelectedNhaHang(item);
+        setValue(value);
+      }
+    } else {
+      setValue([]);
+      setSelectedNhaHang([]);
+    }
   };
+
   return (
     <div className="select-option">
       <Cols>
@@ -89,13 +108,20 @@ const ChonNhaHang = ({
           allowClear
           showSearch
           showArrow
+          filterOption={(input, option) => {
+            if (option.title) {
+              return (
+                option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              );
+            }
+          }}
           mode="multiple"
           onChange={onChange}
         >
           <MyOption key={"all"} value={"all"} title={"Tất cả"}>
             Tất cả
           </MyOption>
-          {listFilteredNhaHang &&
+          {listFilteredNhaHang.length > 0 &&
             listFilteredNhaHang.map((data, index) => {
               return (
                 <MyOption

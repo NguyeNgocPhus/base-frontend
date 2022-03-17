@@ -1,6 +1,11 @@
 import { REQUEST_STATE } from "../../app-config/constants";
 import { getApiKhuVuc, cancelGetApiKhuVuc } from "../../data-source/dmp/khuvuc";
+import { apiGetMatHang, cancelGetMatHang } from "../../data-source/dmp/mathang";
 import { apiGetMien, cancelApiGetMien } from "../../data-source/dmp/mien";
+import {
+  apiGetNhaCungCap,
+  cancelGetNhaCungCap,
+} from "../../data-source/dmp/nhacungcap";
 import {
   apiGetApiNhaHang,
   cancelGetApiNhaHang,
@@ -80,6 +85,34 @@ const DMP = {
     apiGetApiNhaHang(params).then((response) => {
       if (response && response.state !== REQUEST_STATE.UNMOUNT) {
         setDataNhaHang(response);
+      }
+    });
+  },
+  cancelGetNhaCungCap: cancelGetNhaCungCap,
+  getNhaCungCapAsync: function (params, setNhaCungCapData) {
+    setNhaCungCapData({
+      state: REQUEST_STATE.REQUEST,
+      message: "",
+      loading: true,
+    });
+
+    apiGetNhaCungCap(params).then((response) => {
+      if (response && response.message !== REQUEST_STATE.UNMOUNT) {
+        setNhaCungCapData(response);
+      }
+    });
+  },
+  cancelGetMatHang: cancelGetMatHang,
+  getMatHangAsync: function (params, setMatHangData) {
+    setMatHangData({
+      state: REQUEST_STATE.REQUEST,
+      message: "",
+      loading: true,
+    });
+
+    apiGetMatHang(params).then((response) => {
+      if (response && response.message !== REQUEST_STATE.UNMOUNT) {
+        setMatHangData(response);
       }
     });
   },

@@ -40,3 +40,15 @@ export const stateNhaHang = atom({
     ...defaultState,
   },
 });
+export const stateNhaCungCap = atom({
+  key: "STATE-NHA-CUNG_CAP",
+  default: {
+    ...defaultState,
+  },
+});
+export const stateMatHang = atom({
+  key: "STATE-MAT-HANG",
+  default: {
+    ...defaultState,
+  },
+});

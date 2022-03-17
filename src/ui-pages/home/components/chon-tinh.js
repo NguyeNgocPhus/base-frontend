@@ -78,6 +78,13 @@ function ChonTinh({ selectedKhuVuc, tinhError, setSelectedTinh }) {
             allowClear
             showSearch
             showArrow
+            filterOption={(input, option) => {
+              if (option.title) {
+                return (
+                  option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                );
+              }
+            }}
             placeholder="Chọn tỉnh"
             mode="multiple"
             onChange={onChange}

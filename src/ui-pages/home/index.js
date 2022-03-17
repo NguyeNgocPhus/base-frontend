@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { ROLES } from "../../app-config/constants";
 import { myProfileState } from "../../store/auth/share-state";
 import { ButtonH44Orange } from "../../ui-source/button";
 import { BoldText, NormalText } from "../../ui-source/text";
 import ChonKhuVuc from "./components/chon-khu-vuc";
+import { ChonMatHang } from "./components/chon-mat-hang";
 import ChonMien from "./components/chon-mien";
+import { ChonNhaCungCap } from "./components/chon-nha-cung-cap";
 import ChonNhaHang from "./components/chon-nha-hang";
 import ChonThuongHieu from "./components/chon-thuong-hieu";
 import ChonTinh from "./components/chon-tinh";
 import "./style.css";
 function Home() {
   const dataMyProfile = useRecoilValue(myProfileState);
-
   //select Mien
   const [selectedMien, setSelectedMien] = useState("");
   //select Khu vuc
@@ -22,6 +24,11 @@ function Home() {
   const [selectedThuongHieu, setSelectedThuongHieu] = useState([]);
   //select Nha Hang
   const [selectedNhaHang, setSelectedNhaHang] = useState([]);
+  //select nha cung cap
+  const [selectedNhaCungCap, setSelectedNhaCungCap] = useState("");
+  const [selectedNhaCungCapName, setSelectedNhaCungCapName] = useState("");
+  //select mat hang
+  const [seletedMatHang, setListSelectedMatHang] = useState([]);
   //validator input
   const [validationError, setValidationError] = useState({
     mienError: false,
@@ -29,7 +36,18 @@ function Home() {
     tinhError: false,
     thuongHieuError: false,
     nhaHangError: false,
+    nhaCungCapError: true,
+    matHangError: false,
   });
+  let isAdmin = false;
+  if (dataMyProfile.data) {
+    const { roles } = dataMyProfile.data;
+    (roles || []).forEach((item) => {
+      if (item.name != null && item.name.toLowerCase() === ROLES.SYSTEM_ADMIN) {
+        isAdmin = true;
+      }
+    });
+  }
   ///validation Mien
   useEffect(() => {
     if (selectedMien) {
@@ -44,6 +62,20 @@ function Home() {
       });
     }
   }, [selectedMien]);
+  //validation mat hang
+  useEffect(() => {
+    if (seletedMatHang && seletedMatHang.length > 0) {
+      setValidationError({
+        ...validationError,
+        mienError: false,
+      });
+    } else {
+      setValidationError({
+        ...validationError,
+        mienError: true,
+      });
+    }
+  }, [seletedMatHang]);
   // validation Khu vuc
   useEffect(() => {
     if (selectedKhuVuc && selectedKhuVuc.length > 0) {
@@ -85,11 +117,42 @@ function Home() {
       });
     }
   }, [selectedThuongHieu]);
+  useEffect(() => {
+    if (selectedThuongHieu && selectedThuongHieu.length > 0) {
+      setValidationError({
+        ...validationError,
+        thuongHieuError: false,
+      });
+    } else {
+      setValidationError({
+        ...validationError,
+        thuongHieuError: true,
+      });
+    }
+  }, [selectedNhaCungCap]);
+
+  useEffect(() => {
+    let ncc = isAdmin ? selectedNhaCungCap : dataMyProfile?.data?.supplier;
+    if (!ncc || ncc === "all") {
+      setValidationError({
+        ...validationError,
+        nhaCungCapError: true,
+      });
+    } else {
+      setValidationError({
+        ...validationError,
+        nhaCungCapError: false,
+      });
+    }
+  }, [selectedNhaCungCap, dataMyProfile, isAdmin]);
   const onClick = () => {
     console.log("mien", selectedMien);
     console.log("khu vuc", selectedKhuVuc);
     console.log("tinh", selectedTinh);
     console.log("thuong hieu", selectedThuongHieu);
+    console.log("nha hang", selectedNhaHang);
+    console.log("nhacc", selectedNhaCungCap, selectedNhaCungCapName);
+    console.log("mat hang", seletedMatHang);
   };
   //console.log(dataMyProfile);
   return (
@@ -125,6 +188,20 @@ function Home() {
             nhaHangError={validationError.nhaHangError}
             setSelectedNhaHang={setSelectedNhaHang}
           ></ChonNhaHang>
+          <ChonNhaCungCap
+            setSelectedNhaCungCap={setSelectedNhaCungCap}
+            nhaCungCapError={validationError.nhaCungCapError}
+            isAdmin={isAdmin}
+            setSelectedNhaCungCapName={setSelectedNhaCungCapName}
+          ></ChonNhaCungCap>
+          {!isAdmin || (isAdmin && !validationError.nhaCungCapError) ? (
+            <ChonMatHang
+              setListSelectedMatHang={setListSelectedMatHang}
+              matHangError={validationError.matHangError}
+              selectedNhaCungCap={selectedNhaCungCap}
+              isAdmin={isAdmin}
+            />
+          ) : null}
           <ButtonH44Orange onClick={onClick}>onClick</ButtonH44Orange>
         </div>
       </div>

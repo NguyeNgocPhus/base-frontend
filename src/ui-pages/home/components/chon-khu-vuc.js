@@ -80,6 +80,13 @@ function ChonKhuVuc({ setSelectedKhuVuc, selectedMien, khuVucError }) {
             allowClear
             showSearch
             showArrow
+            filterOption={(input, option) => {
+              if (option.title) {
+                return (
+                  option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                );
+              }
+            }}
             mode="multiple"
             onChange={onChange}
           >

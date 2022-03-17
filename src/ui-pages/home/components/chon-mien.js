@@ -29,6 +29,13 @@ function ChonMien({ setSelectedMien, mienError }) {
             placeholder="Chọn miền"
             allowClear
             showSearch
+            filterOption={(input, option) => {
+              if (option.title) {
+                return (
+                  option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                );
+              }
+            }}
             showArrow
             onChange={onChange}
           >
