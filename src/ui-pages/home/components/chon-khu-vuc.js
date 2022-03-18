@@ -6,7 +6,7 @@ import useKhuVuc from "../../../store/dmp/use-khu-vuc";
 import { Cols } from "../../../ui-source/colunm";
 import { MyOption, MySelect } from "../../../ui-source/select";
 import { BoldText, NormalText } from "../../../ui-source/text";
-
+import "./select-option.css";
 function ChonKhuVuc({ setSelectedKhuVuc, selectedMien, khuVucError }) {
   ///console.log(khuVucError);
   const [dataKhuVuc, setDataKhuVuc] = useKhuVuc();
@@ -69,7 +69,7 @@ function ChonKhuVuc({ setSelectedKhuVuc, selectedMien, khuVucError }) {
   };
   return (
     <div className="select-option">
-      <Cols>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Khu Vực</BoldText>
       </Cols>
       {dataKhuVuc && dataKhuVuc.state === REQUEST_STATE.SUCCESS ? (

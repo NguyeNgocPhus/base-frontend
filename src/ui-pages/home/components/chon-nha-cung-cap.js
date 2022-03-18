@@ -4,7 +4,7 @@ import { useNhaCungCap } from "../../../store/dmp/use-nha-cung-cap";
 import { Cols } from "../../../ui-source/colunm";
 import { MyOption, MySelect } from "../../../ui-source/select";
 import { BoldText, NormalText } from "../../../ui-source/text";
-
+import "./select-option.css";
 export const ChonNhaCungCap = ({
   setSelectedNhaCungCap,
   nhaCungCapError,
@@ -44,7 +44,7 @@ export const ChonNhaCungCap = ({
 
   return (
     <div className="select-option">
-      <Cols className={"row-space-around"}>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Nhà cung cấp</BoldText>
       </Cols>
       {option.state === REQUEST_STATE.SUCCESS ? (

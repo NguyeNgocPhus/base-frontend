@@ -19,7 +19,7 @@ function ChonMien({ setSelectedMien, mienError }) {
   };
   return (
     <div className="select-option">
-      <Cols className={"row-space-around"}>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Miền</BoldText>
       </Cols>
       {dataMien.state === REQUEST_STATE.SUCCESS ? (

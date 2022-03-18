@@ -1,3 +1,12 @@
 .trigger-filter {
   width: 25%;
+  padding: 40px 20px;
+  background-color: #ffff;
+}
+.btn-dismiss {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffbd2f;
+  color: #000000;
 }

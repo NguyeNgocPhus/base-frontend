@@ -4,7 +4,7 @@ import useNhaHang from "../../../store/dmp/use-nha-hang";
 import { Cols } from "../../../ui-source/colunm";
 import { MyOption, MySelect } from "../../../ui-source/select";
 import { BoldText, NormalText } from "../../../ui-source/text";
-
+import "./select-option.css";
 const ChonNhaHang = ({
   selectedThuongHieu,
   selectedTinh,
@@ -38,9 +38,12 @@ const ChonNhaHang = ({
         selectedThuongHieu.length > 0 &&
         selectedThuongHieu[0].value === "all";
       //setListFilteredNhaHang(dataNhaHang?.data?.result);
-      if (isAllTinh && isAllThuongHieu) {
-        setValue(["all"]);
-        setListFilteredNhaHang(dataNhaHang.data.result);
+      if (!isAllTinh && !isAllThuongHieu) {
+        const tinh = filterTinh(dataNhaHang.data.result, selectedTinh);
+        if (tinh && tinh.length > 0) {
+          const thuonghieu = filterThuongHieu(tinh, selectedThuongHieu);
+          setListFilteredNhaHang(thuonghieu);
+        }
       } else if (!isAllTinh && isAllThuongHieu) {
         const tinh = filterTinh(dataNhaHang.data.result, selectedTinh);
         setListFilteredNhaHang(tinh);
@@ -52,11 +55,8 @@ const ChonNhaHang = ({
 
         setListFilteredNhaHang(thuonghieu);
       } else {
-        const tinh = filterTinh(dataNhaHang.data.result, selectedTinh);
-        if (tinh && tinh.length > 0) {
-          const thuonghieu = filterThuongHieu(tinh, selectedThuongHieu);
-          setListFilteredNhaHang(thuonghieu);
-        }
+        setValue(["all"]);
+        setListFilteredNhaHang(dataNhaHang.data.result);
       }
     }
   }, [selectedTinh, selectedThuongHieu]);
@@ -98,7 +98,7 @@ const ChonNhaHang = ({
 
   return (
     <div className="select-option">
-      <Cols>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Nhà hàng</BoldText>
       </Cols>
       {dataNhaHang && dataNhaHang.state === REQUEST_STATE.SUCCESS && (

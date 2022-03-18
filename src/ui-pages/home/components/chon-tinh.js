@@ -4,7 +4,7 @@ import useTinh from "../../../store/dmp/use-tinh";
 import { Cols } from "../../../ui-source/colunm";
 import { MyOption, MySelect } from "../../../ui-source/select";
 import { BoldText, NormalText } from "../../../ui-source/text";
-
+import "./select-option.css";
 function ChonTinh({ selectedKhuVuc, tinhError, setSelectedTinh }) {
   const [dataTinh, requestDataTinh] = useTinh();
   const [listFilteredTinh, setListFileterTinh] = useState([]);
@@ -68,7 +68,7 @@ function ChonTinh({ selectedKhuVuc, tinhError, setSelectedTinh }) {
 
   return (
     <div className="select-option">
-      <Cols>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Tỉnh: </BoldText>
       </Cols>
       {dataTinh && dataTinh.state === REQUEST_STATE.SUCCESS ? (

@@ -63,7 +63,7 @@ export const ChonMatHang = ({
 
   return (
     <div className="select-option">
-      <Cols className={"row-space-around"}>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Mặt hàng</BoldText>
       </Cols>
       {option.state === REQUEST_STATE.SUCCESS ? (

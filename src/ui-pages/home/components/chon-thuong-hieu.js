@@ -4,7 +4,7 @@ import useThuongHieu from "../../../store/dmp/use-thuong-hieu";
 import { Cols } from "../../../ui-source/colunm";
 import { MyOption, MySelect } from "../../../ui-source/select";
 import { BoldText, NormalText } from "../../../ui-source/text";
-
+import "./select-option.css";
 const ChonThuongHieu = ({ setSelectedThuongHieu, thuongHieuError }) => {
   const [dataThuongHieu, requestDataThuongHieu] = useThuongHieu();
   const [listFilteredThuongHieu, setListFilteredThuongHieu] = useState([]);
@@ -43,7 +43,7 @@ const ChonThuongHieu = ({ setSelectedThuongHieu, thuongHieuError }) => {
   };
   return (
     <div className="select-option">
-      <Cols>
+      <Cols className={"row-space-around"} style={{ marginBottom: "10px" }}>
         <BoldText>Thương hiệu</BoldText>
       </Cols>
       {dataThuongHieu && dataThuongHieu.state === REQUEST_STATE.SUCCESS && (
